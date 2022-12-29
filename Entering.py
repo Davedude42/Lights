@@ -39,6 +39,8 @@ class Entering(Program):
 				this.command = this.command[:-1]
 			elif k == 'delete':
 				this.command = ''
+			elif k == 'esc':
+				this.commanding = False
 			elif k == 'enter':
 				if this.command == '':
 					this.commanding = False
@@ -56,6 +58,7 @@ class Entering(Program):
 					if not res:
 						this.redraw(True)
 						time.sleep(0.6)
+						# it redraws again later
 					else:
 						this.commanding = False
 			elif isinstance(k, str) and len(k) == 1:
