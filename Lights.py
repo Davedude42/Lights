@@ -14,6 +14,7 @@ from Tint import Tint
 from SleepyTime import SleepyTime
 from Animation import Animation
 from RefreshProgram import RefreshProgram
+from Starry import Starry
 
 class Lights:
 	def __init__(this, length):
@@ -88,6 +89,8 @@ class Lights:
 			this.programs[com['layer']] = SleepyTime(this.length, com['args'])
 		elif com['key'] == 'a':
 			this.programs[com['layer']] = Animation(this.length, com['args'])
+		elif com['key'] == 'star':
+			this.programs[com['layer']] = Starry(this.length, com['args'])
 		else:
 			return False
 			
@@ -102,6 +105,7 @@ class Lights:
 		print("Paint - /p")
 		print("Nighttime - /n")
 		print("Animation - /a [animation]")
+		print("Starry - /star")
 		this.FPS = FPS
 		while not this.sleeping:
 			this.frame()
