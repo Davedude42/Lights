@@ -6,10 +6,29 @@ import datetime
 class SleepyTime(Program):
 	def __init__(this, length, args):
 		super().__init__(length)
+		
 		day = datetime.datetime.today().weekday()
-		calcUpTime = 0 if day <= 2 or day == 6 else (40 if day == 3 else -1)
-		this.upTime = (-1 if int(args[0]) == -1 else 5*60+int(args[0])) if len(args)>0 else 5*60+calcUpTime
-		print("getting up at:", this.upTime)
+		if len(args)>0:
+			if args[0].__contains__(':'):
+				hour = int(args[0].split(':')[0])
+				minute = int(args[0].split(':')[1])
+				this.upTime = hour*60 + minute
+			else:
+				this.upTime = -1
+		else:
+			if day <= 3:
+				this.upTime = 5*60 + 5
+			elif day == 4:
+				this.upTime = 5*60 + 30
+			else:
+				this.upTime = -1
+		
+		if this.upTime == -1:
+			print('Not waking up')
+		else:
+			add0 = '0' + str(this.upTime%60) if this.upTime%60 < 10 else str(this.upTime%60)
+			print("getting up at", str(this.upTime//60) + ':' + add0)
+		
 		this.time = -1
 		this.doing = "before"
 		this.changed = False

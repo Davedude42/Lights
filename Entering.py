@@ -33,6 +33,7 @@ class Entering(Program):
 	def key(this, k):
 		
 		if this.commanding == True:
+			print('"'+k+'"')
 			if k == 'space':
 				this.command += ' '
 			elif k == 'backspace':

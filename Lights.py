@@ -50,9 +50,9 @@ class Lights:
 			key = k.name  # other keys
 		
 		if key == 'esc':
-			for key in list(this.programs.keys()):
-				if key < 1000:
-					this.programs.pop(key, None)
+			for pkey in list(this.programs.keys()):
+				if pkey < 1000:
+					this.programs.pop(pkey, None)
 			this.force = True
 		elif key == '`':
 			this.setPaused(not this.paused)
@@ -96,18 +96,18 @@ class Lights:
 		return True
 		
 	def begin(this, FPS=24):
-		this.FPS = FPS
-		while not this.sleeping:
-			this.frame()
-			
-			time.sleep(1/this.FPS)
-		
 		print("Here are the possible commands:")
 		print("Rainbow - /r [speed]")
 		print("Stop a program - /[layer] pop")
 		print("Paint - /p")
 		print("Nighttime - /n")
 		print("Animation - /a [animation]")
+		this.FPS = FPS
+		while not this.sleeping:
+			this.frame()
+			
+			time.sleep(1/this.FPS)
+		
 
 	def frame(this):
 		if not this.sleeping and not this.paused:
