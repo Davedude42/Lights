@@ -6,19 +6,23 @@ class Starry(Program):
 	def __init__(this, length, args):
 		super().__init__(length)
 		this.stars = []
+		this.stars.append([random.randint(0, this.length-1), 0, random.randint(0, 359)])
+		
+		this.speed = int(args[0]) if len(args) != 0 else 5	
 		
 
 	def frame(this, timer):
-		if timer % 30 == 0:
-			this.stars.append([random.randint(0, length-1), 0, random.randint(0, 359)])
+		if timer % this.speed == 0:
+			this.stars.append([random.randint(0, this.length-1), 0, random.randint(0, 359)])
 			
-		for i in range(len(this.stars), 0, -1):
+		for i in range(len(this.stars)-1, 0, -1):
 			star = this.stars[i]
-			brightness = 50 * (-(star[1]*star[1]) + 200*star[1]) / (10000)
-			this.pixels[star[0]] = (star[2], 100, 80, brightness)
+			brightness = 30 * (-(star[1]*star[1]) + 50*star[1]) / (25*25)
+			this.pixels[star[0]] = (star[2], 100, 90, brightness)
 			
 			star[1] += 1
 			
-			if star[1] > 200:
+			if star[1] > 50:
 				this.stars.pop(i)
+		return True
 			
