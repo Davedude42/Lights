@@ -7,7 +7,7 @@ class SleepyTime(Program):
 	def __init__(this, length, args):
 		super().__init__(length)
 		
-		day = datetime.datetime.today().weekday()
+		day = datetime.datetime.now().weekday()
 		if len(args)>0:
 			if args[0].__contains__(':'):
 				hour = int(args[0].split(':')[0])
@@ -52,13 +52,14 @@ class SleepyTime(Program):
 							((9, 77, 16, 100), 0, (29, 70, 50, 100), 60, (190, 100, 90, 100), 100),
 							(this.time) / (60*this.dur) * 100
 						))
+					else:
+						this.fill((0, 100, 100, 100))
+					"""flashing, don't like it
 					elif this.time/60 > this.dur + 15:
 						if (this.time) % 2:
 							this.fill((0, 100, 100, 100))
 						else:
-							this.fill((309, 100, 50, 100))
-					else:
-						this.fill((0, 100, 100, 100))
+							this.fill((309, 100, 50, 100))"""
 					this.time += 1
 					return True
 				elif time.hour*60 + time.minute == this.upTime - this.dur:
@@ -84,22 +85,16 @@ class SleepyTime(Program):
 
 	def key(this, k):
 		if this.doing == "before":
-			
-			old = this.pixels[:]
-			
-			this.fill((0, 0, 0, 0))
-			color = list(useful.GOOD_COLORS["offer-white"])
-			color[3] = 40
-			useful.wall(this.pixels, 1, color);
-			
-			this.trans(old, "journal", 1)
+			this.fill((0, 0, 0, 100))
+			this.fillLine(useful.GOOD_COLORS["offer-white"], useful.WALLS[0], useful.WALLS[0]+useful.WALLS[1])
+			#this.slidingTransition(15, { "color1": useful.GOOD_COLORS["offer-white"], "color2": (0, 0, 0, 100) })
+			this.doing = "journal"
 			
 		elif this.doing == "journal":
-			old = this.pixels[:]
+			this.slidingTransition(15, { "color1": useful.GOOD_COLORS["offer-white"], "color2": (0, 0, 0, 100), "start": useful.WALLS[0], "end": useful.WALLS[0]+useful.WALLS[1] })
 			
-			this.fill((0, 0, 0, 0))
-			
-			this.trans(old, "sleeping", 20)
+			this.fill((0, 0, 0, 100))
+			this.doing = "sleeping"
 			
 		elif this.doing == "sleeping":
 			
