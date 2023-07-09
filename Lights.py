@@ -4,6 +4,8 @@ import time
 import math
 from pynput.keyboard import Key, Listener
 
+from bluedot import BlueDot
+
 import board
 import neopixel
 
@@ -22,6 +24,18 @@ class Lights:
 		this.pixels = neopixel.NeoPixel(
 			board.D21, length, brightness=0.25, auto_write=False, pixel_order=neopixel.GRB
 		)
+		
+		this.bd = BlueDot(cols=2, rows=2)
+		
+		this.bd[0,0].color = 'black'
+		this.bd[0,1].color = 'red'
+		this.bd[1,1].color = '#cccccc'
+		
+		this.bd[1,0].visible = False
+		
+		this.bd[0,0].when_pressed = lambda: this.clearPrograms()
+		this.bd[0,1].when_pressed = lambda: this.onCommand({ 'key': 'r', 'layer': 10, 'args': [] })
+		this.bd[1,1].when_pressed = lambda: this.onCommand({ 'key': 'star', 'layer': 10, 'args': [1] })
 		
 		this.programs = {
 			-1: RefreshProgram(this.length, []),
@@ -42,7 +56,13 @@ class Lights:
 			on_release=this.keyRelease)
 		this.listen.start()
 			
-			
+	
+	def clearPrograms(this):
+		for pkey in list(this.programs.keys()):
+			if pkey < 1000:
+				this.programs.pop(pkey, None)
+		this.force = True
+	
 	def keyPress(this, k):
 		
 		try:
@@ -51,10 +71,7 @@ class Lights:
 			key = k.name  # other keys
 		
 		if key == 'esc':
-			for pkey in list(this.programs.keys()):
-				if pkey < 1000:
-					this.programs.pop(pkey, None)
-			this.force = True
+			this.clearPrograms()
 		elif key == '`':
 			this.setPaused(not this.paused)
 			
