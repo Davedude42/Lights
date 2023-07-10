@@ -1,5 +1,11 @@
 import math
 WALLS = [110, 106, 109, 107]
+WALLS_SUM = []
+s = 0
+for i in range(len(WALLS)):
+	s += WALLS[i]
+	WALLS_SUM.append(s)
+
 def layer(base, top):
 	return [math.floor(base[i] + (top[i] - base[i]) * (top[3]/100)) for i in range(3)]
 	

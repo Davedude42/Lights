@@ -4,10 +4,8 @@ import time
 import math
 from pynput.keyboard import Key, Listener
 
-from bluedot import BlueDot
+# from bluedot import BlueDot
 
-import board
-import neopixel
 
 from Rainbow import Rainbow
 from Entering import Entering
@@ -19,13 +17,11 @@ from RefreshProgram import RefreshProgram
 from Starry import Starry
 
 class Lights:
-	def __init__(this, length):
-		this.length = length
-		this.pixels = neopixel.NeoPixel(
-			board.D21, length, brightness=0.25, auto_write=False, pixel_order=neopixel.GRB
-		)
+	def __init__(this, pixels):
+		this.length = pixels.length
+		this.pixels = pixels
 		
-		this.bd = BlueDot(cols=2, rows=2)
+		"""this.bd = BlueDot(cols=2, rows=2)
 		
 		this.bd[0,0].color = 'black'
 		this.bd[0,1].color = 'red'
@@ -35,7 +31,7 @@ class Lights:
 		
 		this.bd[0,0].when_pressed = lambda: this.clearPrograms()
 		this.bd[0,1].when_pressed = lambda: this.onCommand({ 'key': 'r', 'layer': 10, 'args': [] })
-		this.bd[1,1].when_pressed = lambda: this.onCommand({ 'key': 'star', 'layer': 10, 'args': [1] })
+		this.bd[1,1].when_pressed = lambda: this.onCommand({ 'key': 'star', 'layer': 10, 'args': [1] })"""
 		
 		this.programs = {
 			-1: RefreshProgram(this.length, []),
