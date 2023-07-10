@@ -54,7 +54,7 @@ class FakePixels:
 		#	print('NO ALPHA VALUE')
 		#	return
 		if(color[0] < 0 or color[0] > 255 or color[1] < 0 or color[1] > 255 or color[2] < 0 or color[2] > 255):
-			print('NOT VALID COLOR')
+			print('NOT VALID COLOR', color)
 			return
 
 		this.pixels[index] = color

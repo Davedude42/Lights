@@ -7,6 +7,8 @@ for i in range(len(WALLS)):
 	WALLS_SUM.append(s)
 
 def layer(base, top):
+	if(top[3] > 100):
+		print('layer() has an issue with that')
 	return [math.floor(base[i] + (top[i] - base[i]) * (top[3]/100)) for i in range(3)]
 	
 import colorsys

@@ -7,6 +7,8 @@ class Program:
 		this.length = length
 		this.localTimer = 0
 		this.changed = True
+
+		this.isRGB = False
 	
 	def frame(this, timer):
 		return False

@@ -140,7 +140,10 @@ class Lights:
 				for k, program in sorted(this.programs.items()): # loop through programs
 					for i in range(this.length): # loop through pixels
 						pxl = list(program.pixels[i])
-						rgb = hsl_to_rgb(pxl)
+						if(program.isRGB):
+							rgb = pxl
+						else:
+							rgb = hsl_to_rgb(pxl)
 						this.pixels[i] = layer(this.pixels[i], rgb)
 				this.pixels.show()
 						
