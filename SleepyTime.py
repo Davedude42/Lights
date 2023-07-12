@@ -4,6 +4,7 @@ import math
 import datetime
 
 from Animation import Animation
+from Transition import Transition
 
 class SleepyTime(Program):
 	def __init__(this, length, args):
@@ -34,13 +35,28 @@ class SleepyTime(Program):
 		this.wakeupStart = this.upTime - this.wakeupDuration
 		
 		this.counter = -1
-		this.fill(useful.GOOD_COLORS["offer-white"])
 
 		this.animation = None
+
+		this.transitioning = False
 		
-		this.changeDoing("sleeping")
+		this.changeDoing("before", 0)
 
 	def frame(this, timer):
+		# transition
+		if this.transitioning:
+			this.animation.frame()
+			this.pixels = this.animation.pixels
+
+			this.changed = True
+
+			if this.animation.transitionComplete():
+				
+				this.pixels = this.animation.pixels
+
+				this.animation = None
+				this.transitioning = False
+
 		# only bother updating every half second
 		if(timer % 12 == 0):
 			date = datetime.datetime.now()
@@ -58,7 +74,7 @@ class SleepyTime(Program):
 			if time < 12 * 60:
 				if this.doing == 'sleeping':
 					if time >= this.wakeupStart:
-						this.changeDoing('wakeup')
+						this.changeDoing('wakeup', 0)
 
 		if this.changed:
 			this.changed = False
@@ -67,16 +83,55 @@ class SleepyTime(Program):
 			return False
 	
 	def key(this, k):
-		pass
+		if k == 'space':
+			if this.doing == 'before':
+				this.changeDoing('journal', 24)
+			elif this.doing == 'journal':
+				this.changeDoing('sleeping', 24*15)
+			elif this.doing == 'sleeping':
+				this.changeDoing('cantsleep', 24)
+			elif this.doing == 'cantsleep':
+				this.changeDoing('sleeping', 24)
 		
-	def changeDoing(this, newdoing):
+	def changeDoing(this, newdoing, transitionDuration):
 		this.doing = newdoing
 
-		if(this.doing == 'sleeping'):
+		print('SleepyTime: I am now ' + this.doing)
+
+		newPixels = [(0, 0, 0, 100)]*this.length
+
+		if this.doing == 'before':
 			this.isRGB = False
-			this.fill((0, 0, 0, 100))
-		if(this.doing == 'wakeup'):
+
+			newPixels = [useful.GOOD_COLORS["offer-white"]]*this.length
+
+		if this.doing == 'journal':
+			this.isRGB = False
+			
+
+			color = list(useful.GOOD_COLORS["offer-white"])
+			color[3] = 50
+			
+			useful.wall(newPixels, 1, color)
+
+		if this.doing == 'cantsleep':
+			this.isRGB = False
+
+			color = list(useful.GOOD_COLORS["offer-white"])
+			color[3] = 20
+			
+			useful.wall(newPixels, 1, color)
+
+		if this.doing == 'sleeping':
+			this.isRGB = False
+
+		if this.doing == 'wakeup':
 			this.isRGB = True
 			this.animation = Animation(this.length, ['wakeup', 0])
+
+		else:
+			this.transitioning = True
+			this.animation = Transition(this.pixels, newPixels, transitionDuration)
+		
 
 

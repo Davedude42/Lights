@@ -13,8 +13,6 @@ def layer(base, top):
 	
 import colorsys
 def gradient(pattern, percent):
-	global WALLS
-	
 	i = 0
 	while True:
 		if i + 2 >= len(pattern):
