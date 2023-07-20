@@ -15,6 +15,7 @@ from SleepyTime import SleepyTime
 from Animation import Animation
 from RefreshProgram import RefreshProgram
 from Starry import Starry
+from Interwebs import Interwebs
 
 class Lights:
 	def __init__(this, pixels):
@@ -104,6 +105,8 @@ class Lights:
 			this.programs[com['layer']] = Animation(this.length, com['args'])
 		elif com['key'] == 'star':
 			this.programs[com['layer']] = Starry(this.length, com['args'])
+		elif com['key'] == 'web':
+			this.programs[com['layer']] = Interwebs(this.length, com['args'])
 		else:
 			return False
 			
