@@ -54,6 +54,10 @@ def looping(start, end, length):
 		ret.append(i)
 	return ret
 
+def loopedList(length, start, end):
+	ret = []
+	
+	
 GOOD_COLORS = {
 	"red": (4, 95, 50, 100),
 	"orange": (25, 100, 50, 100),
