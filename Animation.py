@@ -40,6 +40,12 @@ class Animation(Program):
 
 			this.changed = True
 
+	def setPercent(this, percent):
+		if percent > 1 or percent < 0:
+			raise Exception("Animation percent out of range")
+		
+		this.setFrame(min(math.floor(percent * this.frameLength), this.frameLength-1))
+
 	
 	def advanceFrame(this):
 		this.setFrame((this.frameOn + 1) % this.frameLength)
