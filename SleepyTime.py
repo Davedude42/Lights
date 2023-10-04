@@ -60,13 +60,14 @@ class SleepyTime(Program):
 		# only bother updating every half second
 		if(timer % 12 == 0):
 			date = datetime.datetime.now()
-			time = date.hour * 60 + date.minute
+			time = date.hour * 60 + date.minute + date.second/60
 
 			# make any updates
 
 			if(this.doing == 'wakeup' and timer % 24 == 0):
-				this.animation.setFrame(min(time - this.wakeupStart, this.wakeupDuration))
+				this.animation.setPercent(min((time - this.wakeupStart) / this.wakeupDuration, 1))
 				this.pixels = this.animation.pixels
+				this.changed = True
 
 			# check if it's time for something
 
@@ -92,6 +93,15 @@ class SleepyTime(Program):
 				this.changeDoing('cantsleep', 24)
 			elif this.doing == 'cantsleep':
 				this.changeDoing('sleeping', 24)
+			elif this.doing == 'wakeup':
+				this.changeDoing('awakenow', 24)
+		elif k == 'd':
+			this.changeDoing('wakeup', 0)
+			this.wakeupDuration = 1
+			date = datetime.datetime.now()
+			time = date.hour * 60 + date.minute
+			this.wakeupStart = time
+
 		
 	def changeDoing(this, newdoing, transitionDuration):
 		this.doing = newdoing
@@ -122,8 +132,20 @@ class SleepyTime(Program):
 			
 			useful.wall(newPixels, 1, color)
 
+
 		if this.doing == 'sleeping':
 			this.isRGB = False
+
+
+		if this.doing == 'awakenow':
+			this.isRGB = False
+
+			for i in range(this.length):
+				this.pixels[i] = useful.rgb_to_hsl(this.pixels[i])
+
+			color = list(useful.GOOD_COLORS["offer-white"])
+			
+			useful.wall(newPixels, 1, color)
 
 		if this.doing == 'wakeup':
 			this.isRGB = False
