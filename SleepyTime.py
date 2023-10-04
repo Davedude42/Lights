@@ -126,8 +126,8 @@ class SleepyTime(Program):
 			this.isRGB = False
 
 		if this.doing == 'wakeup':
-			this.isRGB = True
-			this.animation = Animation(this.length, ['wakeup', 0])
+			this.isRGB = False
+			this.animation = Animation(this.length, ['wakeup', 0, False])
 
 		else:
 			this.transitioning = True
