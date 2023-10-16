@@ -46,6 +46,10 @@ class SleepyTime(Program):
 		# transition
 		if this.transitioning:
 			if this.animation.transitionComplete():
+				
+				this.animation.frame()
+				this.pixels = this.animation.pixels
+				
 				this.animation = None
 				this.transitioning = False
 			else:

@@ -25,7 +25,7 @@ class Transition(Program):
 			percent = this.time / this.duration * 100
 
 		if percent == 100:
-			this.pixels = this.newPixels
+			this.pixels = this.newPixels.copy()
 		else:
 			for i in range(this.length):
 				this.pixels[i] = useful.gradient([this.oldPixels[i], 0, this.newPixels[i], 100], percent)
