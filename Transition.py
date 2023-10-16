@@ -24,8 +24,11 @@ class Transition(Program):
 		else:
 			percent = this.time / this.duration * 100
 
-		for i in range(this.length):
-			this.pixels[i] = useful.gradient([this.oldPixels[i], 0, this.newPixels[i], 100], percent)
+		if percent == 100:
+			this.pixels = this.newPixels
+		else:
+			for i in range(this.length):
+				this.pixels[i] = useful.gradient([this.oldPixels[i], 0, this.newPixels[i], 100], percent)
 
 		this.time += 1
 

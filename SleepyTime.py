@@ -45,17 +45,15 @@ class SleepyTime(Program):
 	def frame(this, timer):
 		# transition
 		if this.transitioning:
-			this.animation.frame()
-			this.pixels = this.animation.pixels
-
-			this.changed = True
-
 			if this.animation.transitionComplete():
-				
-				this.pixels = this.animation.pixels
-
 				this.animation = None
 				this.transitioning = False
+			else:
+				this.animation.frame()
+				this.pixels = this.animation.pixels
+
+				this.changed = True
+
 
 		# only bother updating every half second
 		if(timer % 12 == 0):
