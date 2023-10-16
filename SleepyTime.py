@@ -146,8 +146,9 @@ class SleepyTime(Program):
 			useful.wall(newPixels, 1, color)
 
 		if this.doing == 'wakeup':
-			this.isRGB = True
-			this.animation = Animation(this.length, ['wakeup', 0])
+			this.isRGB = False
+			this.animation = Animation(this.length, ['wakeup', 0, False])
+
 		else:
 			this.transitioning = True
 			this.animation = Transition(this.pixels, newPixels, transitionDuration)
