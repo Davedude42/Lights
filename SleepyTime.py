@@ -95,7 +95,7 @@ class SleepyTime(Program):
 		print('SleepyTime: I am now ' + this.doing)
 		
 		date = datetime.datetime.now()
-		time = date.hour * 60 + date.minute + date.second/60 + date.millisecond/60/1000
+		time = date.hour * 60 + date.minute + date.second/60 + date.microsecond/60/1000000
 				
 		this.transitioning = True
 		this.transitionDuration = transitionDuration

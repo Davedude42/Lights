@@ -13,7 +13,5 @@ class Transition(Animation):
 	def setPercent(this, p):
 		super().setPercent(p)
 		
-		print(this.percent)
-		
 		for i in range(len(this.pixels)):
 			this.pixels[i] = useful.gradient((this.oldPixels[i], 0, this.newPixels[i], 100), this.percent)
