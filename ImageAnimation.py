@@ -27,7 +27,7 @@ class ImageAnimation(Animation):
 
 		if this.img != None:
 			for i in range(this.length):
-				h, s, l = this.img.getpixel((i, this.frameOn))
+				h, s, l = this.img.getpixel((i, this.frame))
 				this.pixels[i] = (h, s, l, 100)
 
 			this.changed = True
