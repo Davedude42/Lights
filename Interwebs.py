@@ -15,7 +15,7 @@ class Interwebs(Program):
 
 		this.sio = socketio.Client()
 
-		this.sio.connect('http://localhost:5173')
+		this.sio.connect('https://davidharoldsen.com')
 		
 		@this.sio.event
 		def connect():
