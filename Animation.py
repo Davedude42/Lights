@@ -7,8 +7,5 @@ class Animation(Program):
 		super().__init__(length)
 		
 	def setPercent(this, p):
-		if p > 100 or p < 0:
-			raise Exception("Animation percent out of range")
-		else:
-			this.percent = p
+		this.percent = min(p)
 		

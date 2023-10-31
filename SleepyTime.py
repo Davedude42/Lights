@@ -44,7 +44,7 @@ class SleepyTime(Program):
 
 	def frame(this, timer):
 		date = datetime.datetime.now()
-		time = date.hour * 60 + date.minute + date.second/60
+		time = date.hour * 60 + date.minute + date.second/60 + date.millisecond/60/1000
 			
 		# transition
 		if this.transitioning:
@@ -81,7 +81,7 @@ class SleepyTime(Program):
 			elif this.doing == 'wakeup':
 				this.changeDoing('awakenow', 1/60)
 		elif k == 'd':
-			this.changeDoing('wakeup', 0)
+			this.changeDoing('wakeup', 1)
 			
 			this.wakeupDuration = 1
 			date = datetime.datetime.now()
@@ -95,7 +95,7 @@ class SleepyTime(Program):
 		print('SleepyTime: I am now ' + this.doing)
 		
 		date = datetime.datetime.now()
-		time = date.hour * 60 + date.minute + date.second/60
+		time = date.hour * 60 + date.minute + date.second/60 + date.millisecond/60/1000
 				
 		this.transitioning = True
 		this.transitionDuration = transitionDuration
