@@ -12,7 +12,7 @@ class ImageAnimation(Animation):
 		this.name = args[0] if len(args) > 0 else ''
 		
 		try:
-			this.img = Image.open("animations/" + this.name + ".png").convert('HSL')
+			this.img = Image.open("animations/" + this.name + ".png").convert('rgb')
 		except:
 			this.img = None
 			
@@ -27,7 +27,8 @@ class ImageAnimation(Animation):
 
 		if this.img != None:
 			for i in range(this.length):
-				h, s, l = this.img.getpixel((i, this.frame))
+				
+				h, s, l = useful.rgb_to_hsl(this.img.getpixel((i, this.frame)))
 				this.pixels[i] = (h, s, l, 100)
 
 			this.changed = True

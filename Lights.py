@@ -19,7 +19,7 @@ from Interwebs import Interwebs
 
 class Lights:
 	def __init__(this, pixels):
-		this.length = pixels.length
+		this.length = len(pixels)
 		this.pixels = pixels
 		
 		"""this.bd = BlueDot(cols=2, rows=2)
