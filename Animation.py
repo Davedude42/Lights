@@ -7,5 +7,5 @@ class Animation(Program):
 		super().__init__(length)
 		
 	def setPercent(this, p):
-		this.percent = min(p)
+		this.percent = min(100, max(0, p))
 		
