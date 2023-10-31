@@ -125,9 +125,6 @@ class SleepyTime(Program):
 				useful.wall(newPixels, 1, color)
 	
 	
-			if this.doing == 'sleeping':
-	
-	
 			if this.doing == 'awakenow':
 	
 				color = list(useful.GOOD_COLORS["offer-white"])
