@@ -11,13 +11,15 @@ class ImageAnimation(Animation):
 		
 		this.name = args[0] if len(args) > 0 else ''
 		
+		this.nframes = 1
+		this.frame = 0
+		
 		try:
 			this.img = Image.open("animations/" + this.name + ".png").convert('rgb')
+			this.nframes = this.img.size[1]
 		except:
 			this.img = None
-			
-		this.nframes = this.img.size[1]
-		this.frame = 0
+			print("Couldn't load animation '" + this.name + "'")
 		
 	def setFrame(this, frame):
 		if frame > 100 or frame < 0:
