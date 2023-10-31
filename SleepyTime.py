@@ -44,7 +44,7 @@ class SleepyTime(Program):
 
 	def frame(this, timer):
 		date = datetime.datetime.now()
-		time = date.hour * 60 + date.minute + date.second/60
+		time = date.hour * 60 + date.minute + date.second/60 + date.microsecond/60/1000000
 			
 		# transition
 		if this.transitioning:

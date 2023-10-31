@@ -2,6 +2,7 @@ from PIL import Image
 
 from Animation import Animation
 import math
+import useful
 
 # @param Animation Name
 
@@ -15,7 +16,7 @@ class ImageAnimation(Animation):
 		this.frame = 0
 		
 		try:
-			this.img = Image.open("animations/" + this.name + ".png").convert('rgb')
+			this.img = Image.open("animations/" + this.name + ".png").convert('RGB')
 			this.nframes = this.img.size[1]
 		except:
 			this.img = None
@@ -29,9 +30,8 @@ class ImageAnimation(Animation):
 
 		if this.img != None:
 			for i in range(this.length):
-				
-				h, s, l = useful.rgb_to_hsl(this.img.getpixel((i, this.frame)))
-				this.pixels[i] = (h, s, l, 100)
+				r, g, b = this.img.getpixel((i, this.frame))
+				this.pixels[i] = useful.rgb_to_hsl((r, g, b, 100))
 
 			this.changed = True
 
