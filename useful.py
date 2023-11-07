@@ -7,9 +7,9 @@ for i in range(len(WALLS)):
 	WALLS_SUM.append(s)
 
 def layer(base, top):
-	if(top[3] > 100):
-		print('layer() has an issue with that')
-	return [math.floor(base[i] + (top[i] - base[i]) * (top[3]/100)) for i in range(3)]
+	return [math.floor(base[0] + (top[0] - base[0]) * (top[3]/100)),\
+	math.floor(base[1] + (top[1] - base[1]) * (top[3]/100)),\
+	math.floor(base[2] + (top[2] - base[2]) * (top[3]/100))]
 	
 import colorsys
 def gradient(pattern, percent):
@@ -46,7 +46,6 @@ def loop(index, length):
 		i -= length
 	return i
 def looping(start, end, length):
-	print(start> end)
 	ret = [start]
 	i = start
 	while i != end:

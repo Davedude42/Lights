@@ -16,6 +16,7 @@ from Animation import Animation
 from RefreshProgram import RefreshProgram
 from Starry import Starry
 from Interwebs import Interwebs
+from FPS import FPS
 
 class Lights:
 	def __init__(this, pixels):
@@ -35,7 +36,6 @@ class Lights:
 		this.bd[1,1].when_pressed = lambda: this.onCommand({ 'key': 'star', 'layer': 10, 'args': [1] })"""
 		
 		this.programs = {
-			-1: RefreshProgram(this.length, []),
 			1000: Entering(this.length, this.onCommand)
 		}
 		
@@ -107,6 +107,8 @@ class Lights:
 			this.programs[com['layer']] = Starry(this.length, com['args'])
 		elif com['key'] == 'web':
 			this.programs[com['layer']] = Interwebs(this.length, com['args'])
+		elif com['key'] == 'fps':
+			this.programs[com['layer']] = FPS(this.length, [this.FPS])
 		else:
 			return False
 			
@@ -119,9 +121,10 @@ class Lights:
 		print("Rainbow - /r [speed]")
 		print("Stop a program - /[layer] pop")
 		print("Paint - /p")
-		print("Nighttime - /n")
+		print("Nighttime - /n [time]")
 		print("Animation - /a [animation]")
 		print("Starry - /star")
+		print("FPS - /fps")
 		this.FPS = FPS
 		while not this.sleeping:
 			this.frame()
@@ -138,16 +141,15 @@ class Lights:
 			for k, program in this.programs.items():
 				res = program.frame(this.timer)
 				anyUpdated = res or anyUpdated
+				
+			# Update every 5 minutes
+			if this.timer % (5*60*24):
+				anyUpdated = True
 			
 			if anyUpdated or this.force:
 				for k, program in sorted(this.programs.items()): # loop through programs
 					for i in range(this.length): # loop through pixels
-						pxl = list(program.pixels[i])
-						if(program.isRGB):
-							rgb = pxl
-						else:
-							rgb = hsl_to_rgb(pxl)
-						this.pixels[i] = layer(this.pixels[i], rgb)
+						this.pixels[i] = layer(this.pixels[i], program.pixels[i])
 				this.pixels.show()
 						
 				this.force = False
